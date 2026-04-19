@@ -1,0 +1,319 @@
+@let page = data();
+@let hero = page.hero;
+@let contact = page.contact;
+
+<div class="home-page">
+  <header class="hero-shell">
+    <nav class="navbar navbar-expand-lg navbar-light hero-nav container py-4">
+      <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/home">
+        <span class="brand-mark"><i class="bi bi-heart-fill"></i></span>
+        <span class="brand-text">Qamqor Pet</span>
+      </a>
+
+      <div class="navbar-nav ms-auto d-flex flex-row flex-wrap gap-3 align-items-center">
+        <a class="nav-link" routerLink="/home">Басты бет</a>
+        <a class="nav-link" href="#solutions">Шешу жолдары</a>
+        <a class="nav-link" routerLink="/catalog">Каталог</a>
+        <a class="nav-link" href="#about">Біз туралы</a>
+        <a class="btn btn-warm ms-lg-2" href="#contact">Байланыс</a>
+      </div>
+    </nav>
+
+    <section class="container hero-section pb-5">
+      <div class="row align-items-center g-4 g-xl-5">
+        <div class="col-lg-6">
+          <div class="hero-copy">
+            <span class="hero-chip glass-card">{{ hero.eyebrow }}</span>
+            <h1 class="hero-title">{{ hero.title }}</h1>
+            <p class="hero-text">{{ hero.description }}</p>
+
+            <div class="d-flex flex-wrap gap-3 hero-actions">
+              <a class="btn btn-warm btn-lg px-4" [routerLink]="hero.primary_button_link">
+                {{ hero.primary_button_text }}
+              </a>
+              <a class="btn btn-soft btn-lg px-4" [href]="hero.secondary_button_link">
+                {{ hero.secondary_button_text }}
+              </a>
+            </div>
+
+            <div class="hero-mini-stats row g-3 mt-4">
+              @for (item of page.stats; track item.id) {
+                <div class="col-sm-4">
+                  <div class="mini-stat glass-card">
+                    <div class="mini-stat-value">{{ item.value }}</div>
+                    <div class="mini-stat-label">{{ item.label }}</div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="hero-visual">
+            <div class="hero-image-card glass-card">
+              <img [src]="hero.image_url" alt="Панасыз жануарға қамқорлық көрсету" />
+            </div>
+
+            <div class="floating-card glass-card floating-card-top">
+              <i class="bi bi-house-heart"></i>
+              <div>
+                <strong>Жаңа үйге бір қадам</strong>
+                <p>Әр жануардың өз тарихы бар, ал жалғасын сен жаза аласың.</p>
+              </div>
+            </div>
+
+            <div class="floating-card glass-card floating-card-bottom">
+              <i class="bi bi-heart-pulse"></i>
+              <div>
+                <strong>Тексерілген және қауіпсіз</strong>
+                <p>Қамқорлық, ем және сенім - біздің басты ұстанымымыз.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <section class="container py-5">
+      <div class="text-center mb-5">
+        <p class="section-kicker">Неге бізді таңдайды</p>
+        <h2 class="section-title">Неге біздің жануарлар?</h2>
+      </div>
+
+      <div class="row g-4">
+        @for (reason of page.reasons; track reason.id) {
+          <div class="col-md-4">
+            <article class="feature-card h-100 glass-card">
+              <span class="feature-icon"><i class="bi" [class]="reason.icon"></i></span>
+              <h3>{{ reason.title }}</h3>
+              <p>{{ reason.description }}</p>
+            </article>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section id="solutions" class="container py-5">
+      <div class="row align-items-end g-4 mb-4">
+        <div class="col-lg-7">
+          <p class="section-kicker">Әлеуметтік мәселенің шешімі</p>
+          <h2 class="section-title">Панасыз жануарлар мәселесін қалай шеше аламыз?</h2>
+          <p class="section-subtitle">
+            Жоба тақырыбының басты мақсаты - мәселені көрсету ғана емес, оны шешудің нақты
+            жолдарын ұсыну. Төмендегі бағыттар қоғам үшін де, жануарлар үшін де маңызды.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        @for (solution of page.solutions; track solution.id) {
+          <div class="col-md-6">
+            <article class="solution-card h-100">
+              <div class="solution-number">0{{ solution.id }}</div>
+              <div>
+                <div class="solution-icon"><i class="bi" [class]="solution.icon"></i></div>
+                <h3>{{ solution.title }}</h3>
+                <p>{{ solution.description }}</p>
+              </div>
+            </article>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="container py-5">
+      <div class="catalog-shell glass-card">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-end mb-4">
+          <div>
+            <p class="section-kicker">Жануарлар каталогы</p>
+            <h2 class="section-title">Өзіңе дос таба алатын жануарлар</h2>
+            <p class="section-subtitle mb-0">
+              Мұнда сен өзіңе дос бола алатын жануарларды таба аласың. Әрқайсысының өз тарихы
+              бар, мүмкін, сен оның жаңа өмірінің бастамасы боларсың.
+            </p>
+          </div>
+          <a class="btn btn-warm align-self-start align-self-lg-auto" routerLink="/catalog">
+            Барлық жануарды көру
+          </a>
+        </div>
+
+        <div class="row g-4">
+          @for (animal of featuredAnimals(); track animal.id) {
+            <div class="col-md-4">
+              <article class="animal-card h-100">
+                <div class="animal-card-image">
+                  <img [src]="animal.image_url" [alt]="animal.name" />
+                </div>
+                <div class="animal-card-body">
+                  <span class="animal-badge">{{ animal.tag }}</span>
+                  <h3>{{ animal.name }}</h3>
+                  <div class="animal-meta">{{ animal.kind }} • {{ animal.age }}</div>
+                  <p>{{ animal.story }}</p>
+                </div>
+              </article>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-5">
+      <div class="text-center mb-5">
+        <p class="section-kicker">Біздің достардың өмірі</p>
+        <h2 class="section-title">Кеше олар жалғыз еді, бүгін олар қорғалған</h2>
+        <p class="section-subtitle mx-auto">
+          Бұрын олар көшеде жалғыз еді. Қазір олар бақытты, себебі оларға қамқор адамдар
+          табылды. Сен де сондай адам бола аласың.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        @for (story of page.stories; track story.id) {
+          <div class="col-md-4">
+            <article class="story-card h-100">
+              <div class="story-icon"><i class="bi bi-balloon-heart"></i></div>
+              <h3>{{ story.title }}</h3>
+              <p>{{ story.description }}</p>
+            </article>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section id="about" class="container py-5">
+      <div class="about-grid glass-card">
+        <div>
+          <p class="section-kicker">Біз туралы</p>
+          <h2 class="section-title">{{ page.about.title }}</h2>
+          <p class="section-subtitle">{{ page.about.description }}</p>
+        </div>
+
+        <div class="about-points">
+          <div class="about-point">
+            <i class="bi bi-clipboard2-heart"></i>
+            <span>Уақытша күтім және қауіпсіз орта</span>
+          </div>
+          <div class="about-point">
+            <i class="bi bi-capsule-pill"></i>
+            <span>Емдеу, вакцинация және бақылау</span>
+          </div>
+          <div class="about-point">
+            <i class="bi bi-person-hearts"></i>
+            <span>Сенімді отбасыға табыстау</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-5">
+      <div class="text-center mb-5">
+        <p class="section-kicker">Статистика</p>
+        <h2 class="section-title">Біздің нәтижелеріміз</h2>
+      </div>
+
+      <div class="row g-4">
+        @for (stat of page.stats; track stat.id) {
+          <div class="col-md-4">
+            <article class="stat-card glass-card h-100 text-center">
+              <div class="stat-icon"><i class="bi" [class]="stat.icon"></i></div>
+              <div class="stat-value">{{ stat.value }}</div>
+              <p class="mb-0">{{ stat.label }}</p>
+            </article>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section id="contact" class="container py-5">
+      <div class="row g-4 align-items-stretch">
+        <div class="col-lg-5">
+          <div class="contact-panel h-100 glass-card">
+            <p class="section-kicker">Контактілер</p>
+            <h2 class="section-title">{{ contact.title }}</h2>
+            <p class="section-subtitle">{{ contact.description }}</p>
+
+            <div class="contact-list">
+              <div class="contact-item">
+                <i class="bi bi-envelope"></i>
+                <span>{{ contact.email }}</span>
+              </div>
+              <div class="contact-item">
+                <i class="bi bi-telephone"></i>
+                <span>{{ contact.phone }}</span>
+              </div>
+              <div class="contact-item">
+                <i class="bi bi-geo-alt"></i>
+                <span>{{ contact.address }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="contact-form-panel glass-card">
+            <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="name">Аты-жөніңіз</label>
+                  <input
+                    id="name"
+                    name="name"
+                    class="form-control form-control-lg"
+                    [(ngModel)]="formData.name"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label" for="email">Электрондық пошта</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    class="form-control form-control-lg"
+                    [(ngModel)]="formData.email"
+                    required
+                  />
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label" for="message">Хабарлама</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    class="form-control"
+                    [(ngModel)]="formData.message"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="d-flex flex-wrap gap-3 align-items-center mt-4">
+                <button class="btn btn-warm btn-lg px-4" type="submit">Жіберу</button>
+
+                @if (submitted()) {
+                  <span class="form-success">
+                    Хабарламаңыз қабылданды. Біз сізбен міндетті түрде байланысамыз.
+                  </span>
+                }
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-5 pb-6">
+      <div class="final-cta glass-card">
+        <p class="section-kicker">Қорытынды</p>
+        <h2 class="section-title">{{ page.final_cta.title }}</h2>
+        <p class="section-subtitle mx-auto mb-4">{{ page.final_cta.description }}</p>
+        <a class="btn btn-warm btn-lg px-4" routerLink="/catalog">Дос табуға қадам жаса</a>
+      </div>
+    </section>
+  </main>
+</div>

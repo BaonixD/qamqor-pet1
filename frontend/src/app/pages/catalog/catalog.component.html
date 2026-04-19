@@ -1,0 +1,46 @@
+<section class="catalog-page py-5">
+  <div class="container">
+    <div class="catalog-hero glass-card">
+      <div class="d-flex flex-column flex-lg-row justify-content-between gap-4 align-items-lg-center">
+        <div>
+          <p class="section-kicker">Жануарлар каталогы</p>
+          <h1 class="section-title mb-3">Өзіңе дос бола алатын жануарлар</h1>
+          <p class="section-subtitle mb-0">
+            Бұл бетте уақытша паналаудағы жануарлар берілген. Әрқайсысы жаңа үй, қамқорлық
+            және мейірімді иесін күтеді.
+          </p>
+        </div>
+        <a class="btn btn-soft btn-lg px-4 align-self-start" routerLink="/home">Басты бетке оралу</a>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+      @for (animal of animals(); track animal.id) {
+        <div class="col-md-6 col-xl-4">
+          <article class="catalog-card h-100">
+            <div class="catalog-card-image">
+              <img [src]="animal.image_url" [alt]="animal.name" />
+            </div>
+
+            <div class="catalog-card-body">
+              <div class="d-flex justify-content-between align-items-start gap-3 mb-2">
+                <div>
+                  <h2>{{ animal.name }}</h2>
+                  <div class="catalog-meta">{{ animal.kind }} • {{ animal.age }}</div>
+                </div>
+                <span class="animal-badge">{{ animal.tag }}</span>
+              </div>
+
+              <p>{{ animal.story }}</p>
+
+              <div class="catalog-footer">
+                <span><i class="bi bi-heart-fill me-2"></i>Жаңа үйге дайын</span>
+                <button class="btn btn-warm btn-sm px-3" type="button">Асырап алу</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      }
+    </div>
+  </div>
+</section>
