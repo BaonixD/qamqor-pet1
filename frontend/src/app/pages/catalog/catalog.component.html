@@ -1,5 +1,7 @@
 <section class="catalog-page py-5">
   <div class="container">
+
+    <!-- Hero -->
     <div class="catalog-hero glass-card">
       <div class="d-flex flex-column flex-lg-row justify-content-between gap-4 align-items-lg-center">
         <div>
@@ -14,19 +16,55 @@
       </div>
     </div>
 
-    <div class="row g-4 mt-1">
-      @for (animal of animals(); track animal.id) {
+    <!-- Filters -->
+    <div class="filter-bar">
+      <button
+        class="filter-btn"
+        [class.active]="activeFilter() === 'all'"
+        (click)="setFilter('all')"
+        type="button"
+      >
+        <i class="bi bi-grid-3x3-gap me-1"></i>Барлығы
+        <span class="filter-count">{{ animals().length }}</span>
+      </button>
+      @for (kind of uniqueKinds(); track kind) {
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter() === kind"
+          (click)="setFilter(kind)"
+          type="button"
+        >
+          <i class="bi" [class.bi-suit-heart]="kind === 'Мысық'" [class.bi-stars]="kind === 'Ит'"></i>
+          {{ kind }}
+          <span class="filter-count">{{ animals().length - animals().filter(a => a.kind !== kind).length }}</span>
+        </button>
+      }
+    </div>
+
+    <!-- Animal cards -->
+    @if (filteredAnimals().length === 0) {
+      <div class="empty-state">
+        <i class="bi bi-search"></i>
+        <p>Табылмады</p>
+      </div>
+    }
+
+    <div class="row g-4">
+      @for (animal of filteredAnimals(); track animal.id) {
         <div class="col-md-6 col-xl-4">
           <article class="catalog-card h-100">
             <div class="catalog-card-image">
-              <img [src]="animal.image_url" [alt]="animal.name" />
+              <img [src]="animal.image_url" [alt]="animal.name" loading="lazy" />
+              <span class="card-kind-badge">{{ animal.kind }}</span>
             </div>
 
             <div class="catalog-card-body">
               <div class="d-flex justify-content-between align-items-start gap-3 mb-2">
                 <div>
                   <h2>{{ animal.name }}</h2>
-                  <div class="catalog-meta">{{ animal.kind }} • {{ animal.age }}</div>
+                  <div class="catalog-meta">
+                    <i class="bi bi-clock me-1"></i>{{ animal.age }}
+                  </div>
                 </div>
                 <span class="animal-badge">{{ animal.tag }}</span>
               </div>
@@ -35,7 +73,13 @@
 
               <div class="catalog-footer">
                 <span><i class="bi bi-heart-fill me-2"></i>Жаңа үйге дайын</span>
-                <button class="btn btn-warm btn-sm px-3" type="button">Асырап алу</button>
+                <button
+                  class="btn btn-warm btn-sm px-3"
+                  type="button"
+                  (click)="openAdoptModal(animal)"
+                >
+                  Асырап алу
+                </button>
               </div>
             </div>
           </article>
@@ -44,3 +88,80 @@
     </div>
   </div>
 </section>
+
+<!-- Modal backdrop -->
+@if (showModal()) {
+  <div class="adopt-backdrop" (click)="closeModal()"></div>
+
+  <div class="adopt-modal glass-card" role="dialog" aria-modal="true">
+    <button class="modal-close-btn" type="button" (click)="closeModal()" aria-label="Жабу">
+      <i class="bi bi-x-lg"></i>
+    </button>
+
+    <div class="modal-animal-header">
+      <div class="modal-animal-avatar">
+        <img [src]="selectedAnimal()!.image_url" [alt]="selectedAnimal()!.name" />
+      </div>
+      <div>
+        <p class="section-kicker mb-1">Асырап алу өтінімі</p>
+        <h3 class="modal-animal-name">{{ selectedAnimal()!.name }}</h3>
+        <span class="catalog-meta">{{ selectedAnimal()!.kind }} · {{ selectedAnimal()!.age }}</span>
+      </div>
+    </div>
+
+    <form (ngSubmit)="submitForm()" novalidate>
+      <div class="mb-3">
+        <label class="form-label fw-600" for="adoptName">Аты-жөніңіз</label>
+        <input
+          id="adoptName"
+          type="text"
+          class="form-control adopt-input"
+          [class.is-invalid]="formSubmitted && !formName.trim()"
+          placeholder="Мысалы: Асел Ахметова"
+          [(ngModel)]="formName"
+          name="formName"
+        />
+        @if (formSubmitted && !formName.trim()) {
+          <div class="invalid-feedback">Атыңызды енгізіңіз</div>
+        }
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-600" for="adoptPhone">Телефон нөмірі</label>
+        <input
+          id="adoptPhone"
+          type="tel"
+          class="form-control adopt-input"
+          [class.is-invalid]="formSubmitted && !formPhone.trim()"
+          placeholder="+7 (700) 000-00-00"
+          [(ngModel)]="formPhone"
+          name="formPhone"
+        />
+        @if (formSubmitted && !formPhone.trim()) {
+          <div class="invalid-feedback">Телефон нөмірін енгізіңіз</div>
+        }
+      </div>
+
+      <button type="submit" class="btn btn-warm w-100 py-2">
+        <i class="bi bi-send me-2"></i>Өтінімді жіберу
+      </button>
+    </form>
+  </div>
+}
+
+<!-- Toast notification -->
+@if (showToast()) {
+  <div class="adopt-toast" role="alert">
+    <div class="toast-icon">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <div class="toast-body">
+      <p class="toast-title">Рахмет!</p>
+      <p class="toast-text">Сізді мынандай адресте күтеміз:</p>
+      <p class="toast-address"><i class="bi bi-geo-alt-fill me-1"></i>{{ address }}</p>
+    </div>
+    <button class="toast-close" type="button" (click)="showToast.set(false)" aria-label="Жабу">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+}
