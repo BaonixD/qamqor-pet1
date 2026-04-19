@@ -19,7 +19,7 @@ HOME_DATA = {
     'reasons': [
         {
             'id': 1,
-            'icon': 'bi-shield-heart',
+            'icon': 'bi-shield-check',
             'title': 'Олар қамқорлықта',
             'description': 'Біз әр жануарға уақытша болса да қауіпсіз орта жасаймыз.',
         },
