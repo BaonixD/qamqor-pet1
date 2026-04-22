@@ -42,16 +42,11 @@
   z-index: 1;
 }
 
-.brand-mark {
-  width: 2.6rem;
-  height: 2.6rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #e78b4d, #f3b26d);
-  color: white;
-  box-shadow: 0 10px 24px rgba(231, 139, 77, 0.3);
+.brand-logo {
+  width: 2.8rem;
+  height: 2.8rem;
+  object-fit: contain;
+  border-radius: 12px;
 }
 
 .brand-text {
